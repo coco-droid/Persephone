@@ -1,0 +1,22 @@
+{
+  "name": "agi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "GPT4.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cli": "node cli.js",
+    "server":"node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bing-chat": "^0.2.3",
+    "body-parser": "^1.20.2",
+    "commander": "^10.0.1",
+    "express": "^4.18.2",
+    "langchain": "^0.0.63",
+    "openai": "^3.2.1",
+    "save": "^2.9.0"
+  }
+}

@@ -1,0 +1,157 @@
+The text I want to decompose is: [Can i have Baby ?]Please decompose the text into as many tasks as you think is necessary to get accurate results. I will verify your responses and let you know if they are accurate or not. Please return your responses in an object structure like this: 
+
+{
+"task1": {
+"name": "title for them ",
+"description": "This is the description of task 1",
+"subtasks": [
+{
+"name": "title for them ",
+"description": "This is the description of subtask 1",
+"command": "Search"
+"keywords":"the search query to find information about this"
+},
+{
+"name": "title for them ",
+"description": "This is the description of subtask 2",
+"command": "Write"
+"details":"the details of the task"
+},
+{
+}
+]
+},
+"task2": {
+"name": "title for them ",
+"description": "This is the description of task 2",
+"subtasks": [
+{
+"name": "title for them ",
+"description": "This is the description of subtask 1",
+"command": "Read"
+"keywords":"the search query to find a article about this"
+},
+{
+"name": "title for them ",
+"description": "This is the description of subtask 2",
+"command": "Think"
+},
+{
+"name": "title for them ",
+"description": "This is the description of subtask 3",
+"command": "Excute"
+"cmd":"the command to excute"
+}
+]
+}
+}
+Add "Read, Write, Search, Think, Excute" in the command field if subtask requires any of these actions the field can have one of them.
+
+Before the object add <object-start> in the end add <object-end>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+I want you to create a list of task that can be performed on the text:[${prompt}] 
+Please decompose the text into as many tasks as you think is necessary to get accurate results. 
+Please return your responses in an object structure like this: 
+
+
+"task1": {
+"name": "title for them ",
+"description": "This is the description of task 1",
+"subtasks": [
+{
+"name": "title for them ",
+"description": "This is the description of subtask 1",
+"command": "Search"
+"keywords":"the search query to find information about this"
+},{}...]},{"task2...},...
+The following properties are found in the subtask object:
+name: is a required field for all sub-task value The name of the subtask.
+description: is a required field for all sub-task value The description of the subtask.
+command: is a required field for all sub-task value Add "Read, Write, Search, Think, Execute" in the command field if subtask requires any of these actions the field can have one of them.
+keywords: is a required field for sub-task with Read and Search command  value The keywords that are used to search for information about the subtask.
+remember: necessary in some case value A boolean value remembering subtask precedent or other to get information to accomplish this subtask exemple remember:subtask1
+linear: is a required field for all sub-task value a boolean true if this substack can introduce new substack like a paradigm change for accomplish a goal and false in other case  
+output: is necessary in some case to get a specific information like if the substack need a preference or some information to accomplish
+extension:is a required field for all sub-task with Write command value one of them's extesion:'.txt,.py,.js other text and code extesion 
+ Before the object add <object-start> in the end add <object-end>
+
+
+
+
+
+
+
+
+
+
+
+The following properties are found in the subtask object:
+
+I want you to create a list of task that can be performed on the text:[${prompt}] 
+    Please decompose the text into as many tasks as you think is necessary to get accurate results. 
+    Please return your responses in an object structure like this: 
+
+    {
+    "task1": {
+    "name": "title for them ",
+    "description": "This is the description of task 1",
+    "subtasks": [
+    {
+    "name": "title for them ",
+    "description": "This is the description of subtask 1",
+    "command": "Search"
+    "keywords":"the search query to find information about this"
+    },
+    {
+    "name": "title for them ",
+    "description": "This is the description of subtask 2",
+    "command": "Write",
+    "details":"the details of who write "
+    "extesion":"one of them's extesion:'.txt,.py,.js other text and code extesion'"
+    },
+    {
+    }
+    ]
+    },
+    "task2": {
+    "name": "title for them ",
+    "description": "This is the description of task 2",
+    "subtasks": [ {
+    "name": "title for them ",
+    "description": "This is the description of subtask 1",
+    "command": "Read",
+    "keywords":"the search query to find a article about this"
+    },{
+    "name": "title for them ",
+    "description": "This is the description of subtask 2",
+    "command": "Think"
+    }, {
+    "name": "title for them ",
+    "description": "This is the description of subtask 3",
+    "command": "Execute"
+    "cmd":"the command to excute"}
+    ]}} can add a lot of task and substack 
+    can add this other property to get more accuracy in substack object:'"remember":"remembering subtask precedent or other to get information to accomplish this subtask exemple remember:subtask1",
+    linear:"a boolean true if this substack can introduce new substack like a paradigm change for accomplish a goal and false in other case  ",
+    output:"to get a specific information like if the substack need a preference or some information to accomplish",'
+    Add "Read, Write, Search, Think, Execute" in the command field if subtask requires any of these actions the field can have one of them.
+     Before the object add <object-start> in the end add <object-end>
+
