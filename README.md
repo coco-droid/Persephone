@@ -1,6 +1,6 @@
 # Persephone
 
-![Image of a woman sitting on a throne, holding a pomegranate](https://i.imgur.com/5Jzj8dN.jpg)
+![Image of a woman sitting on a throne, holding a pomegranate](https://imgur.io/t/pomegranate/wlILOnC)
 
 Persephone is an experimental open-source application showcasing the capabilities of the GPT-4 language model. This program, driven by GPT-4, chains together LLM "thoughts", to autonomously achieve whatever goal you set. As one of the first examples of GPT-4 running fully autonomously, Auto-GPT pushes the boundaries of what is possible with AI.
 
