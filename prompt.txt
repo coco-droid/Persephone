@@ -1,0 +1,79 @@
+Here is the JSON object you requested:
+<object-start>{
+    "task1": {
+        "name": "Build airsoft game",
+        "description": "This task involves building an airsoft game.",
+        "subtasks": [
+            {
+                "name": "Research airsoft game",
+                "description": "Research the different types of airsoft games that can be built.",
+                "command": "Search",
+                "keywords":"airsoft games"
+            },
+            {
+                "name": "Choose a type of airsoft game",
+                "description": "Choose a type of airsoft game that you would like to build.",
+                "command": "Think",
+                "remember":"subtask1",
+                "linear":"true"
+            },
+            {
+                "name": "Create a plan for the game",
+                "description": "Create a plan for the airsoft game that you would like to build.",
+                "command": "Write",
+                "extension":".txt"
+            },
+            {
+                "name": "Gather materials",
+                "description": "Gather all the materials that you will need to build the airsoft game.",
+                "command": "Think",
+                "remember":"subtask3"
+            },
+            {
+                "name": "Build the game",
+                "description": "Build the airsoft game according to your plan.",
+                "command": "Execute",
+                "remember":"subtask3"
+            }
+        ]
+    },"EndTask":{
+        "name": "End Task",
+        "description": "gathering the information abbout",
+        "subtasks": [
+            {
+                "name": "End Task",
+                "description": "End the current task.",
+                "command": "End"
+            }
+        ]
+    }
+}<object-end>
+
+Please provide me with a list of tasks that are necessary to explain the process of going to Mars. Consider the technology required to travel to Mars, the cost of traveling to Mars, and the risks involved in traveling to Mars. Finally, please include a task for writing a text conclusion based on your research
+Please return your responses in an json structure like this: 
+
+{
+"task1": {
+"name": "title for them ",
+"description": "This is the description of task 1",
+"subtasks": [
+{
+"name": "title for them ",
+"description": "This is the description of subtask 1",
+"command": "Search"
+"keywords":"the search query to find information about this"
+},{}...]},"task2":{}..."End{description: "end task description dependable of final input",command:""...}}
+The following properties are found in the subtask object:
+name: is a required field for all sub-task value The name of the subtask.
+description: is a required field for all sub-task value The description of the subtask.
+command: is a required field for all sub-task value Add "Read, Write, Search, Think, Execute" in the command field if subtask requires any of these actions the field can have one of them.
+keywords: is a required field for sub-task with Read and Search command  value The keywords that are used to search for information about the subtask.
+remember: necessary in some case value A boolean value remembering subtask precedent or other to get information to accomplish this subtask exemple remember:subtask1
+linear: is a required field for all sub-task value a boolean true if this substack can introduce new substack like a paradigm change for accomplish a goal and false in other case  
+output: is necessary in some case to get a specific information like if the substack need a preference or some information to accomplish
+extension:is a required field for all sub-task with Write command value one of them's extesion:'.txt,.py,.js other text and code extesion 
+ Before the object add <object-start> in the end add <object-end>
+
+
+
+ Please provide me with a list of tasks that are necessary to explain the process of going to Mars. Consider the technology required to travel to Mars, the cost of traveling to Mars, and the risks involved in traveling to Mars. Finally, please include a task for writing a text conclusion based on your research

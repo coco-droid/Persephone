@@ -17,10 +17,9 @@ async interrogateGPT4(prompt) {
   );
   return response.data.choices[0].text;
 }
-  async generateTasks(prompt) {
+  async generateTasks(goal,factor,Finally) {
     let ourprompt=`
-    I want you to create a list of task that can be performed on the text:[${prompt}] 
-Please decompose the text into as many tasks as you think is necessary to get accurate results. 
+    Please provide me with a list of tasks that are necessary to  ${goal}. Consider ${factor}. Finally, please include a task ${Finally}.
 Please return your responses in an json structure like this: 
 
 {
@@ -33,7 +32,7 @@ Please return your responses in an json structure like this:
 "description": "This is the description of subtask 1",
 "command": "Search"
 "keywords":"the search query to find information about this"
-},{}...]},{"task2...},...
+},{}...]},"task2":{}..."End{description: "end task description dependable of final input",command:""...}}
 The following properties are found in the subtask object:
 name: is a required field for all sub-task value The name of the subtask.
 description: is a required field for all sub-task value The description of the subtask.

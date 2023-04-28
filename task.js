@@ -5,11 +5,14 @@ const run=require("./run.js");
 //create task class
 class Task {
 constructor(text){
+  this.prompt=text;
+  this.memory='';
   this.text=text;
   this.gpt4=new GPT4("sk-");
 }
 initialize()
 {
+    this.memlist();
     //get the goal in the prompt    
     var goal=this.getGoal(this.text);
 }
@@ -32,7 +35,7 @@ tasktojson(text) {
      // Return the tasks object.
      return tasks;
    }
-   
+    return getJsonBetweenTags(text, "<object-start>", "<object-end>");
  }
    savedatainjson(name,json){
     //generate a random name for file
@@ -74,6 +77,7 @@ tasktojson(text) {
             "status": "pending",
             "filename":""
         });
+        this.memory=memlist;
         //save the new memlist.json file
         fs.writeFile('memlist.json', JSON.stringify(memlist), function(err) {   
             if (err) throw err;
@@ -104,6 +108,7 @@ tasktojson(text) {
         var memlist = JSON.parse(memlist);
         //save the new prompt in memlist.json with other information
         memlist[property]=value;
+        this.memory=memlist;
         //save the new memlist.json file
         fs.writeFile('memlist.json', JSON.stringify(memlist), function(err) {   
             if (err) throw err;
@@ -113,19 +118,31 @@ tasktojson(text) {
     getGoal(prompt){
         //interrogate gpt4 for to get the goal
         var goal=this.gpt4.interrogateGPT4(`
-        analyze the text "how to go in mars" and identify the following:
-     * The text's goal
-     * The factors 
-     * The category of the text
-     * The final  is the end of the goal is can be a text or a image or a video or a audio or a code or a link or a file or a trading task a web task other thing
-     response of analyze:
-     <object-start>{
-        "text-goal": "explain the process of going to Mars",
-        "factors": "the technology required to travel to Mars, the cost of traveling to Mars, and the risks involved in traveling to Mars",
-        "category": "science"
-        "final":"a text conclusion about the text"
-        }<object-end>
-    like the precedent example analyze the text:[${prompt}] and return response like "<object-start>{...}<object-end>"`);
+        Please use the following example to analyze the text "[how to cook]":
+[ text to analyze :"how to go in mars"
+  response of analyze:<object-start>{ "text-goal": "explain the process of going to Mars", "factors": "the technology required to travel to Mars, the cost of traveling to Mars, and the risks involved in traveling to Mars", "category": "science" "final":"a text conclusion about the text" }<object-end>]
 
+Identify the following for the text "[${prompt}}]":
+- The text's goal
+- The factors
+- The category of the text
+- The final is the end of the goal and can be a text or an image or a video or an audio or a code or a link or a file or a trading task or a web task or other thing.
+
+Return your response as a JSON object with <object-start> before and <object-end> in the end of the JSON."`);
+
+
+    
+    //get the object between the tags
+     var jsonText = this.tasktojson(this.text);
+     //save result in memlist.json in prelude field 
+     this.updatememlist("prelude",jsonText);
     }
+
 }
+/*
+
+
+
+
+
+*/

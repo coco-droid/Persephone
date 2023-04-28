@@ -185,3 +185,17 @@ I want you to create a list of task that can be performed on the text:[${prompt}
             "factors": "the factors that the text considers when explaining how to sleep easy",
             "category": "health"
         }<object-end> for the Example the text was "how to sleep easy"
+
+
+
+        Please use the following example to analyze the text "[how to cook]":
+[ text to analyze :"how to go in mars"
+  response of analyze:<object-start>{ "text-goal": "explain the process of going to Mars", "factors": "the technology required to travel to Mars, the cost of traveling to Mars, and the risks involved in traveling to Mars", "category": "science" "final":"a text conclusion about the text" }<object-end>]
+
+Identify the following for the text "[how to cook]":
+- The text's goal
+- The factors
+- The category of the text
+- The final is the end of the goal and can be a text or an image or a video or an audio or a code or a link or a file or a trading task or a web task or other thing.
+
+Return your response as a JSON object with <object-start> before and <object-end> in the end of the JSON.
