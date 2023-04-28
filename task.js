@@ -6,6 +6,12 @@ const run=require("./run.js");
 class Task {
 constructor(text){
   this.text=text;
+  this.gpt4=new GPT4("sk-");
+}
+initialize()
+{
+    //get the goal in the prompt    
+    var goal=this.getGoal(this.text);
 }
 tasktojson(text) {
     // 
@@ -103,5 +109,23 @@ tasktojson(text) {
             if (err) throw err;
             console.log('complete');
         });
+    }
+    getGoal(prompt){
+        //interrogate gpt4 for to get the goal
+        var goal=this.gpt4.interrogateGPT4(`
+        analyze the text "how to go in mars" and identify the following:
+     * The text's goal
+     * The factors 
+     * The category of the text
+     * The final  is the end of the goal is can be a text or a image or a video or a audio or a code or a link or a file or a trading task a web task other thing
+     response of analyze:
+     <object-start>{
+        "text-goal": "explain the process of going to Mars",
+        "factors": "the technology required to travel to Mars, the cost of traveling to Mars, and the risks involved in traveling to Mars",
+        "category": "science"
+        "final":"a text conclusion about the text"
+        }<object-end>
+    like the precedent example analyze the text:[${prompt}] and return response like "<object-start>{...}<object-end>"`);
+
     }
 }
