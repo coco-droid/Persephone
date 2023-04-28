@@ -155,3 +155,33 @@ I want you to create a list of task that can be performed on the text:[${prompt}
     Add "Read, Write, Search, Think, Execute" in the command field if subtask requires any of these actions the field can have one of them.
      Before the object add <object-start> in the end add <object-end>
 
+
+      analyze the text "how to go in mars" and identify the following:
+     * The text's goal
+     * The factors 
+     * The category of the text
+     * The final  is the end of the goal is can be a text or a image or a video or a audio or a code or a link or a file or a trading task a web task other thing
+     response of analyze:
+     <object-start>{
+        "text-goal": "explain the process of going to Mars",
+        "factors": "the technology required to travel to Mars, the cost of traveling to Mars, and the risks involved in traveling to Mars",
+        "category": "science"
+        "final":"a text conclusion about the text"
+        }<object-end>
+    like the precedent example analyze the text:[${prompt}] and return response like "<object-start>{...}<object-end>"
+     
+       
+       
+        analyze the text "how to sleep easy" and identify the following:
+
+        * The text's goal
+        * The factors that the text considers when explaining how to sleep easy
+        * The category of the text
+        
+        Please respond with an object in the following format:
+
+        <object-start>{
+            "text-goal": "explain how to sleep easy",
+            "factors": "the factors that the text considers when explaining how to sleep easy",
+            "category": "health"
+        }<object-end> for the Example the text was "how to sleep easy"
