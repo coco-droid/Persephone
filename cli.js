@@ -9,5 +9,13 @@ program.command('persephone')
 .action((str, options) => {
   //display string in console
     console.log(str);
-});
+}); 
+/*rewrite the precedent code in cli.js to get a result like this:
+$persephone 
+What would you like me to do?
+--new goal: prompt
+
+*/
+
+
 program.parse(process.argv);
