@@ -13,8 +13,6 @@ constructor(text){
 initialize()
 {
     this.memlist();
-    //get the goal in the prompt    
-    var goal=this.getGoal(this.text);
 }
 tasktojson(text) {
     // 
@@ -87,7 +85,8 @@ tasktojson(text) {
     }
     generateTasks(prompt,name){
         var gpt4 = new GPT4("sk-");
-        gpt4.generateTasks(prompt).then((response) => {
+        var goal=this.getGoal(this.text);
+        gpt4.generateTasks(goal.text-goal,goal.factor,goal.final).then((response) => {
             console.log(response);
             var ol=this.savedatainjson(name,response);
             if(ol){
@@ -128,7 +127,7 @@ Identify the following for the text "[${prompt}}]":
 - The category of the text
 - The final is the end of the goal and can be a text or an image or a video or an audio or a code or a link or a file or a trading task or a web task or other thing.
 
-Return your response as a JSON object with <object-start> before and <object-end> in the end of the JSON."`);
+Return your response as a JSON object with <object-start> before and <object-end> in the end of the JSON." `);
 
 
     
@@ -136,13 +135,7 @@ Return your response as a JSON object with <object-start> before and <object-end
      var jsonText = this.tasktojson(this.text);
      //save result in memlist.json in prelude field 
      this.updatememlist("prelude",jsonText);
+     return jsonText;
     }
 
 }
-/*
-
-
-
-
-
-*/
