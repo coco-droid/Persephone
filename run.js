@@ -67,22 +67,26 @@
 }
 }
 */
+const memory = require("./memory.js");
+//const tools = require("./tools.js");
 class run {
      constructor(name){
             this.name=name;
         }
         start(){
-            //get the json file 
-            var task = fs.readFileSync(this.name, 'utf8');
-            //parse the json file
-            var task = JSON.parse(task);
+            //get the tasks in memory
+            console.log('lol'+this.name);
+            var task = memory.memlistfind(this.name);
+            console.log('lol task is :'+task['tasks']['tasks'].length);
+            //get field tasks in the json file
             //will  execute all the subtasks in the task in order 
             //get all the task in the json file in order
-            var tasks = Object.keys(task);
+            //var tasks = JSON.parse(task);
             //loop through all the task in the json file
-            for (var i = 0; i < tasks.length; i++) {
+            for (var i = 0; i <= task['tasks']['tasks'].length; i++) {
+
                  //get the subtask in the task
-                var subtasks = task[tasks[i]]["subtasks"];
+                var subtasks = task["tasks"]['tasks'][0]["subtasks"];
                 //loop through all the subtask in the task
                 for (var j = 0; j < subtasks.length; j++) {
                     /* command: is a required field for all sub-task value Add "Read, Write, Search, Think, Execute" in the command field if subtask requires any of these actions the field can have one of them.
@@ -107,3 +111,4 @@ class run {
             }
         }
 }
+module.exports = {run};

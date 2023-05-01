@@ -1,19 +1,30 @@
 const fs = require('fs');
-const GPT4 = require("./GPT4.js");
+const memory=require("./memory.js");
+const {GPT4} = require("./GPT4.js");
 const path = require('path');
-const run=require("./run.js");
+const {run}=require("./run.js");
+const runner=new run();
+//console.log(memory);
 //create task class
 class Task {
-constructor(text){
+constructor(text,name){
+  this.name=name;
   this.prompt=text;
-  this.memory='';
   this.text=text;
   this.gpt4=new GPT4("sk-");
 }
 initialize()
 {
-    this.memlist();
-}
+    //create task in memory
+    memory.memlist(this.name,this.prompt,
+        async function(docs)
+        {
+            console.log('executed');
+            await this.getGoal(async function(){
+              await this.generateTasks(this.name);
+            }.bind(this));
+        }.bind(this)
+        );}
 tasktojson(text) {
     // 
     function getJsonBetweenTags(text, startTag, endTag) {
@@ -33,95 +44,31 @@ tasktojson(text) {
      // Return the tasks object.
      return tasks;
    }
-    return getJsonBetweenTags(text, "<object-start>", "<object-end>");
+    var t=getJsonBetweenTags(text, "<object-start>", "<object-end>");
+    console.log(t);
+    return t;
  }
-   savedatainjson(name,json){
-    //generate a random name for file
-    
-        fs.writeFile(`${name}`, json, function(err) {
-        if (err) {
-            console.log(err);
-            return false;
-        }
-        return true;
-    });
-   }
-    memlist(prompt){
-        /*this function return a list of task and information about them is pending or done  this have this structure:
-        [
-            {
-                "name": "title for them ",
-                "prompt": "This is the prompt of task 1",
-                "status": "pending"
-                "filename":"the name of file that contain the task"
-            },
-            {
-                "name": "title for them ",
-                "prompt": "This is the prompt of task 2",
-                "status": "done"
-                "filename":"the name of file that contain the task"
-            }
-        ] 
-        */
-        var name = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        //create or get the memlist.json file 
-        var memlist = fs.readFileSync('memlist.json', 'utf8');
-        //parse the memlist.json file
-        var memlist = JSON.parse(memlist);
-        //save the new prompt in memlist.json with other information
-        memlist.push({
-            "name": name,
-            "prompt": prompt,
-            "status": "pending",
-            "filename":""
-        });
-        this.memory=memlist;
-        //save the new memlist.json file
-        fs.writeFile('memlist.json', JSON.stringify(memlist), function(err) {   
-            if (err) throw err;
-            console.log('complete');
-        });
-    this.generateTasks(prompt,name);
-    }
-    generateTasks(prompt,name){
-        var gpt4 = new GPT4("sk-");
+ 
+ async   generateTasks(name){
         var goal=this.getGoal(this.text);
-        gpt4.generateTasks(goal.text-goal,goal.factor,goal.final).then((response) => {
+       await  this.gpt4.generateTasks(goal.text-goal,goal.factor,goal.final).then((response) => {
             console.log(response);
-            var ol=this.savedatainjson(name,response);
-            if(ol){
-                this.updatememlist("filename",name);
-                run.start(name);
-            }
-            //else add status failed to memlist.json
-            else{
-                this.updatememlist("status","failed");
-            }
-             
+            memory.memlistupdate(name,"status","generated");
+            memory.savedatainjson(name,this.tasktojson(response),function(docs){
+                 memory.memlistupdate(name,"status","saved");
+                 runner.name=this.name;
+                 runner.start(name);
+            }.bind(this));      
         });
     }
-    updatememlist(property,value){
-        //create or get the memlist.json file 
-        var memlist = fs.readFileSync('memlist.json', 'utf8');
-        //parse the memlist.json file
-        var memlist = JSON.parse(memlist);
-        //save the new prompt in memlist.json with other information
-        memlist[property]=value;
-        this.memory=memlist;
-        //save the new memlist.json file
-        fs.writeFile('memlist.json', JSON.stringify(memlist), function(err) {   
-            if (err) throw err;
-            console.log('complete');
-        });
-    }
-    getGoal(prompt){
+   async getGoal(call=function(){console.log('default')}){
         //interrogate gpt4 for to get the goal
-        var goal=this.gpt4.interrogateGPT4(`
+        var goal= await this.gpt4.interrogateGPT4(`
         Please use the following example to analyze the text "[how to cook]":
 [ text to analyze :"how to go in mars"
   response of analyze:<object-start>{ "text-goal": "explain the process of going to Mars", "factors": "the technology required to travel to Mars, the cost of traveling to Mars, and the risks involved in traveling to Mars", "category": "science" "final":"a text conclusion about the text" }<object-end>]
 
-Identify the following for the text "[${prompt}}]":
+Identify the following for the text "[${this.prompt}}]":
 - The text's goal
 - The factors
 - The category of the text
@@ -132,10 +79,11 @@ Return your response as a JSON object with <object-start> before and <object-end
 
     
     //get the object between the tags
-     var jsonText = this.tasktojson(this.text);
+     var jsonText = this.tasktojson(goal);
      //save result in memlist.json in prelude field 
-     this.updatememlist("prelude",jsonText);
-     return jsonText;
+     memory.memlistupdate(this.name,"prelude",jsonText);
+     call()
     }
 
 }
+module.exports = {Task};

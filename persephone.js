@@ -1,4 +1,4 @@
-const Task = require('./task.js');
+const {Task} = require('./task.js');
 class persephone {
    constructor(prompt,name)
    {
@@ -8,6 +8,9 @@ class persephone {
    }
    accomplish()
    {
+     this.task.prompt=this.prompt;
+     this.task.name=this.name;
      this.task.initialize(this.prompt,this.name);
    }
 }
+module.exports = {persephone};

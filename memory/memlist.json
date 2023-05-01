@@ -1,0 +1,47 @@
+{
+    "test": {
+        "name": "test",
+        "prompt": "how to cook salade",
+        "status": "saved",
+        "tasks": {
+            "tasks": [
+                {
+                    "name": "Ingredients",
+                    "description": "This task will list the ingredients required to make a salad.",
+                    "subtasks": [
+                        {
+                            "name": "Greens",
+                            "description": "Choose your greens. Some popular options include lettuce, spinach, kale, and arugula.",
+                            "command": "Read",
+                            "linear": true
+                        },
+                        {
+                            "name": "Vegetables",
+                            "description": "Choose your vegetables. Some popular options include tomatoes, cucumbers, carrots, and bell peppers.",
+                            "command": "Read",
+                            "linear": true
+                        },
+                        {
+                            "name": "Protein",
+                            "description": "Choose your protein. Some popular options include chicken, shrimp, tofu, and hard-boiled eggs.",
+                            "command": "Read",
+                            "linear": true
+                        },
+                        {
+                            "name": "Extras",
+                            "description": "Choose any extras you want to add. Some popular options include nuts, seeds, cheese, and croutons.",
+                            "command": "Read",
+                            "linear": true
+                        }
+                    ]
+                }
+            ]
+        },
+        "prelude": {
+            "text-goal": "explain how to cook salad",
+            "factors": "the ingredients required to make a salad, the preparation steps for making a salad, and the dressing options for a salad",
+            "category": "food",
+            "final": "You can find more information on how to make a salad at the current web page context."
+        }
+    }
+}

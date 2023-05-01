@@ -1,21 +1,41 @@
 const { Configuration, OpenAIApi } = require("openai");
+const{ BingChat } =import('bing-chat');
 
+
+async function  attemptd(prompt) {
+  //const api = new BingChat({
+  //  cookie: process.env.BING
+  //})
+  console.log(prompt);
+  //const res = await api.sendMessage(prompt).then((res) => {
+   // console.log(res);
+  //})
+  ;
+  //console.log(res)
+  return `Here is the analysis of the text “[how to cook salade]”: <object-start>{
+    "text-goal": "explain how to cook salad",
+    "factors": "the ingredients required to make a salad, the preparation steps for making a salad, and the dressing options for a salad",
+    "category": "food",
+    "final": "You can find more information on how to make a salad at the current web page context."
+  } <object-end>`;
+}
 class GPT4 {
   constructor(apiKey) {
     this.apiKey = apiKey;
-    this.config=configuration = new Configuration({
+    this.config= new Configuration({
       apiKey: this.apiKey,
     });
     this.openai = new OpenAIApi(this.config);
   }
 async interrogateGPT4(prompt) {
-  const response = await this.openai.createCompletion(
+  /*const response = await this.openai.createCompletion(
     model="text-davinci-003",
     prompt=ourprompt,
     temperature=0,
     max_tokens=7
   );
-  return response.data.choices[0].text;
+  return response.data.choices[0].text;*/
+  return await attemptd(prompt);
 }
   async generateTasks(goal,factor,Finally) {
     let ourprompt=`
@@ -44,14 +64,58 @@ output: is necessary in some case to get a specific information like if the subs
 extension:is a required field for all sub-task with Write command value one of them's extesion:'.txt,.py,.js other text and code extesion 
  Before the object add <object-start> in the end add <object-end>
     `;
-    const response = await this.openai.createCompletion(
+   /* const response = await this.openai.createCompletion(
       model="text-davinci-003",
       prompt=ourprompt,
       temperature=0,
       max_tokens=7
     );
     return response.data.choices[0].text;
+    }*/
+    return `Sure, I can help you with that. Here is a list of tasks that are necessary to explain how to cook salad. 
+
+    <object-start>
+    {
+      "tasks": [
+        {
+          "name": "Ingredients",
+          "description": "This task will list the ingredients required to make a salad.",
+          "subtasks": [
+            {
+              "name": "Greens",
+              "description": "Choose your greens. Some popular options include lettuce, spinach, kale, and arugula.",
+              "command": "Read",
+              "linear": true
+            },
+            {
+              "name": "Vegetables",
+              "description": "Choose your vegetables. Some popular options include tomatoes, cucumbers, carrots, and bell peppers.",
+              "command": "Read",
+              "linear": true
+            },
+            {
+              "name": "Protein",
+              "description": "Choose your protein. Some popular options include chicken, shrimp, tofu, and hard-boiled eggs.",
+              "command": "Read",
+              "linear": true
+            },
+            {
+              "name": "Extras",
+              "description": "Choose any extras you want to add. Some popular options include nuts, seeds, cheese, and croutons.",
+              "command": "Read",
+              "linear": true
+            }
+          ]
+        }
+        
+      ]
     }
+    
+    
+    <object-end>
+    
+    I hope this helps! Let me know if you have any questions.`;
+  }
 }
 
-module.exports = GPT4;
+module.exports = {GPT4};

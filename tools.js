@@ -1,6 +1,6 @@
 //import google it module
 const langchain = require("langchain");
-const { BingChat }=require('bing-chat');
+//const { BingChat }=require('bing-chat');
 const fs = require('fs');
 const GPT4 = require("./GPT4.js");
 const path = require('path');
@@ -88,4 +88,4 @@ async function example() {
     }
 }
 //export the tools class
-module.exports = tools;
+module.exports = {tools};
